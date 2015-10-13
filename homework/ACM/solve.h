@@ -1,4 +1,4 @@
-namespace P1{
+namespace P1_1{
 	int recursive(int n);
 	int tail_recursive(int n);
 	int _tail_recursive(int n, int ret);
@@ -22,7 +22,7 @@ namespace P1{
 	}
 }
 
-namespace P2{
+namespace P1_2{
 	unsigned int table[1001] = { 0,3,6,6 };
 	unsigned int index = 3;
 	int solve(int n) {
@@ -33,11 +33,10 @@ namespace P2{
 		return table[n];
 	}
 }
-
-namespace P3{
+namespace P1_3{
 	template<int N>
 	int find(int(&A)[N], int x);
-	template<typename T = int>
+	template<typename T>
 	int find(T A, int x);
 	int _find(int* A, int x, int len);
 
@@ -57,8 +56,7 @@ namespace P3{
 	}
 
 }
-
-namespace P4{
+namespace P1_4{
 	void find(int a[], int n, int &i, int &j, int x){
 		int L = i, R = j;
 		while (L <= R) {
@@ -77,8 +75,7 @@ namespace P4{
 		std::swap(i,j);
 	}
 }
-
-namespace P5{
+namespace P1_5{
 	void solve() {
 		int GongJi, MuJi;
 		cout << setw(10) << "公鸡" << setw(10) << "母鸡" << setw(10) << "小鸡" << endl;
@@ -94,8 +91,7 @@ namespace P5{
 		}
 	}
 }
-
-namespace P6 {
+namespace P1_6 {
 #define CUBE(i) (i*i*i)
 	static const int table[10] = { 0,1,CUBE(2),CUBE(3) ,CUBE(4) ,CUBE(5) ,CUBE(6),CUBE(7),CUBE(8),CUBE(9) };
 #undef CUBE
@@ -147,8 +143,7 @@ namespace P6 {
 		}
 	};
 }
-
-namespace P7{
+namespace P1_7{
 	struct Point;
 	struct Cube;
 	double D_MAX = double(INT_MAX) + double(INT_MAX);
@@ -233,7 +228,7 @@ namespace P7{
 		cout << T_V << endl;
 	}
 }
-namespace P8{
+namespace P1_8{
 	inline int check(bool(&row)[9]);
 	inline void C_cnt(bool(&row)[9], int(&cnt)[9]);
 	bool table[10000][9] = { 0 };
@@ -332,8 +327,7 @@ namespace P8{
 		}
 	}
 }
-
-namespace P9{
+namespace P1_9{
 	const int  MAX_N = 1000;
 	pair<int, int> pre[MAX_N] = { {0,1} }, MAX(0, 1);
 	int	B[MAX_N] = { 0 },
@@ -386,8 +380,7 @@ namespace P9{
 	}
 
 }
-
-namespace P10{
+namespace P1_10{
 	void solve() {
 		int K = 0, M, N;
 		while (cin >> K  && K)
@@ -418,5 +411,126 @@ namespace P10{
 			}
 			cout << result << endl;
 		}
+	}
+}
+
+namespace P2_1 {
+	pair<int, int> find(vector<int>& vec, int begin, int len) {
+		if (len == 2) {
+			return make_pair(
+				max(vec[begin], vec[begin + 1]),
+				min(vec[begin], vec[begin + 1])
+				);
+		}
+		if (len == 1) {
+			return make_pair(
+				vec[begin],
+				vec[begin]
+				);
+		}
+		int div = len / 2;
+		pair<int, int> a =find(vec, begin, div)
+			, b = find(vec, begin + div, len - div);
+		return make_pair(max(a.first, b.first), min(a.second, b.second));
+	}
+	void solve() {
+		vector<int> vec;
+		int n, i = 0;
+		cin >> n;
+		while (i!=n){
+			int value;
+			cin >> value;
+			vec.push_back(value);
+			++i;
+		}
+		if (vec.size())
+		{
+			pair<int, int> ret = find(vec, 0, vec.size());
+			cout << ret.first << ' ' << ret.second << endl;
+		}
+	}
+}
+
+namespace P2_2 {
+	struct object {
+		double i,V, W;
+	};
+	bool cmp(object& obj1, object& obj2) {
+		return ((double(obj1.V) / double(obj1.W)) > (double(obj2.V) / double(obj2.W)));
+	}
+	bool cmp2(pair<int, int>& obj1, pair<int, int>& obj2) {
+		return obj1.first < obj2.first;
+	}
+	void solve() {
+		const int MAX_LEN = 1000;
+		int w, n, i = 0;
+		object obj[MAX_LEN];
+		cin >> n >> w;
+		while (i != n)
+		{
+			cin >> obj[i].V >> obj[i].W;
+			obj[i].i = i + 1;
+			++i;
+		}
+		i = 0;
+		sort(obj, obj + n, cmp);
+		vector<pair<int,int>> vec;
+		while (w && i < n)
+		{
+			if (obj[i].W <= w) {
+				w -= obj[i].W;
+				vec.push_back(make_pair(int(obj[i].i), int(obj[i].W)));
+				++i;
+			}
+			else {
+				vec.push_back(make_pair(int(obj[i].i), w));
+				w = 0;
+			}
+		}
+		sort(vec.begin(), vec.end(), cmp2);
+		for (auto& obj : vec)
+		{
+			cout << obj.first << ' ' << obj.second << endl;
+		}
+	}
+
+}
+
+namespace P2_3 {
+	void solve() {
+		char res[242] = { 0 };
+		cin >> (res+1);
+		int s;
+		cin >> s;
+		char *slow = res + 1, *fast = res + 2;
+		while (s && *fast)
+		{
+
+			while (s && *fast && *slow && *fast < *slow ) {
+				--s;
+				--slow;
+			}
+			++slow;
+			while (*fast == '0') ++fast;
+			*slow = *fast;
+			++fast;
+		}
+		while (s)
+		{
+			--slow;
+			--s;
+		}
+		while (*fast)
+		{
+			++slow;
+			*slow = *fast;
+			++fast;
+		}
+		if (slow == res) {
+			++slow;
+			*slow = '0';
+		}
+		*(slow + 1) = 0;
+		cout << (res + 1) << endl;
 	}
 }
