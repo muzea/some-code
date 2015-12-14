@@ -1,3 +1,5 @@
+#ifndef BLOCK_1
+
 namespace P1_1{
 	int recursive(int n);
 	int tail_recursive(int n);
@@ -414,6 +416,10 @@ namespace P1_10{
 	}
 }
 
+#endif
+
+#ifndef BLOCK_2
+
 namespace P2_1 {
 	pair<int, int> find(vector<int>& vec, int begin, int len) {
 		if (len == 2) {
@@ -534,3 +540,479 @@ namespace P2_3 {
 		cout << (res + 1) << endl;
 	}
 }
+
+#endif
+
+#ifndef BLOCK_3
+namespace P3_1 {
+	enum {
+		lose,
+		win
+	};
+	int MAX = 10000;
+	bool* dp = NULL;
+	void solve() {
+		dp = new bool[10001];
+		fill(dp, dp + 10001, lose);
+		int i = 1, end;
+		cin >> end;
+		while (i != end)
+		{
+			if (dp[i] == lose) {
+				int j = i + 1, j_end = 2 * i;
+				while (j <= j_end)
+				{
+					dp[j] = win;
+					++j;
+				}
+			}
+			++i;
+		}
+		cout << (dp[end] == win ? "win" : "lose") << endl;
+		delete[] dp;
+		dp = NULL;
+	}
+}
+
+namespace P3_2 {
+	int num_1, num_2, num_5;
+	bool CanUse5() {
+		if (num_2 > 1)
+			return (num_1);
+		else if (num_2)
+			return (num_1 > 1);
+		else
+			return (num_1 > 3);
+	}
+	bool CanUse2() {
+		return num_1;
+	}
+	void solve() {
+		cin >> num_1 >> num_2 >> num_5;
+		int ans = 0;
+		if (CanUse5()) ans += num_5 * 5;
+		if (CanUse2()) ans += num_2 * 2;
+		ans += num_1;
+		cout << ans << endl;
+	}
+}
+
+namespace P3_3 {
+	int* partition(int *first, int *last) {
+		int pivot = *first;
+		while (first < last) {
+			while (first < last && pivot < *(--last));
+			*first = *last;
+			while (first < last && pivot > *(--first));
+			*last = *first;
+		}
+		*first = pivot;
+		return first;
+	}
+	void qsort(int *first,int *last) {
+		if ((last - first) > 1) {
+			int *mid = partition(first, last);
+			qsort(first, mid);
+			qsort(mid, last);
+		}
+	}
+	bool binary_search(int *first,int *last, int val) {
+		int *left = first, *right = last, *mid = first + (last - first) / 2;
+		while (right >= left)
+		{
+			if (*mid > val) {
+				right = mid - 1;
+			}
+			else if (*mid < val) {
+				left = mid + 1;
+			}
+			else {
+				return true;
+			}
+			mid = left + (right - left) / 2;
+		}
+		return false;
+	}
+}
+
+
+namespace P3_4 {
+	const int Max(105);
+
+	char data[Max][Max];
+	char Temp_Data[Max];
+
+	int Check_Data(int a, int b)
+	{
+		for (int i = 0; i<a; i++)
+			if (i != b&&!strstr(data[i], Temp_Data))
+				return 0;
+		return 1;
+	}
+	void solve() {
+		int num;
+		cin >> num;
+		int n;
+		while (num--&&cin >> n)
+		{
+			int state = 0, length = -1,i,a;
+			for ( i = 0; i<n; i++)
+			{
+				cin >> data[i];
+				if (length == -1 || strlen(data[i])<length)
+				{
+					length = strlen(data[i]);
+					state = i;
+				}
+			}
+			int temp = length, flag = 0, j;
+			while (temp)
+			{
+				for ( i = 0; i + temp <= length; i++)
+				{
+					for ( j = i, a = 0; a<temp; j++, a++)
+						Temp_Data[a] = data[state][j];
+					Temp_Data[a] = '\0';
+					if (Check_Data(n, state))
+					{
+						flag = 1;
+						break;
+					}
+				}
+				if (flag)
+					break;
+				for (i = length - 1; i - temp >= -1; i--)
+				{
+					for (int j = i, a = 0; a<temp; j--, a++)
+						Temp_Data[a] = data[state][j];
+					Temp_Data[a] = '\0';
+					if (Check_Data(n, state))
+					{
+						flag = 1;
+						break;
+					}
+				}
+				if (flag)
+					break;
+				temp--;
+			}
+			cout << temp << endl;
+		}
+	}
+}
+
+namespace P3_5 {
+	int solve(int k,int m) {
+		int END = m;
+		static int Data[51][51] = { { 0, 1 },{ 0, 1 } };
+		static int  i = 2;
+		if (END == 1) {
+			return 1;
+		}
+		while (i < END) {
+			Data[i][1] = 1;
+			int k = 1;
+			while (i - k)
+			{
+				++k;
+				int sum = 0;
+				int j = 1;
+				while (j <= k)
+				{
+					sum += Data[i - k][j];
+					++j;
+				}
+				Data[i][k] = sum;
+			}
+			++i;
+		}
+		Data[END][1] = 1;
+		return Data[END][k];
+	}
+}namespace P3_6 {
+	inline int find_first_zero_bit(int& mask,int num) {
+		int pos = 11;
+		while ((pos - num) > 0)
+		{
+			if (  ( (mask & (1 << pos)) || (mask & (1 << (pos - num - 1))) ) == 0 ) {
+				return pos;
+			}
+			--pos;
+		}
+		return -1;
+	}
+	void solve() {
+		int mask,
+			pos[8] = { 0 },
+			data[5] = { 1,2,3,5,6 };
+		pos[4] = 12;
+		pos[7] = 13;
+		int i;
+		do {  
+			mask = 0;
+			mask |= (((1 << (7 + 1)) + 1) << (pos[7] - 7 - 1));
+			mask |= (((1 << (4 + 1)) + 1) << (pos[4] - 4 - 1));
+			i = 0;
+			while (i != 5)
+			{
+				int bit_pos = find_first_zero_bit(mask, data[i]);
+				if (bit_pos == -1) break;
+				mask |= (1 << bit_pos);
+				mask |= (1 << (bit_pos - data[i] - 1));
+				pos[data[i]] = bit_pos;
+				++i;
+			}
+			if (i == 5) {
+				break;
+			}
+		} while (next_permutation(data, data + 5));
+
+		char buff[20] = "00000000000000";
+		i = 1;
+		while (i <= 7)
+		{
+			buff[13 - (pos[i])] += i;
+			buff[13 - (pos[i] - i - 1)] += i;
+			++i;
+		}
+		cout << buff << endl;
+	}
+}
+
+namespace P3_7 {
+	int end = 81;
+	struct Node
+	{
+		int x,y,chooseInt;
+		Node(int _x, int _y, int _chooseInt):x(_x),y(_y),chooseInt(_chooseInt){}
+	};
+
+	int guess(int i,int j, int (&table)[9][9], int(&chooseIndex)[9][9], int min = 0) {
+		bool numMask[10] = { 0 };
+		int x = 0;
+		for ( x = 0; x < 9; x++)
+		{
+			numMask[table[x][j] | chooseIndex[x][j]] = true;
+		}
+		int y = 0;
+		for ( y = 0; y < 9; y++)
+		{
+			numMask[table[i][y] | chooseIndex[i][y]] = true;
+		}
+
+		int R = i / 3, C = j / 3;
+		R *= 3;
+		C *= 3;
+
+		for (x = 0; x < 3; x++)
+		{
+			for (y = 0; y < 3; y++)
+			{
+				numMask[table[R + x][C + y] | chooseIndex[R + x][C + y]] = true;
+			}
+		}
+
+		++min;
+		while (min < 10 && numMask[min]) ++min;
+		return min;
+	}
+	void preGuess(stack<Node>& S, int(&table)[9][9], int(&chooseIndex)[9][9]) {
+		if (S.empty()) return;
+		chooseIndex[S.top().x][S.top().y] = 0;
+		++end;
+		S.pop();
+		if (!S.empty()) {
+			int num = guess(S.top().x, S.top().y, table, chooseIndex, S.top().chooseInt);
+			if (num == 10)
+			{
+				preGuess(S, table, chooseIndex);
+			}
+			else
+			{
+				S.top().chooseInt = num;
+				chooseIndex[S.top().x][S.top().y] = num;
+			}
+		}
+	}
+
+	void solve() {
+		int table[9][9] = { 0 },
+			chooseIndex[9][9] = { 0 };
+		int R, C;
+		for (R = 0; R < 9; R++)
+		{
+			for (C = 0; C < 9; C++)
+			{
+				char temp;
+				cin >> temp;
+				table[R][C] = temp - '0';
+				if (table[R][C]) --end;
+			}
+		}
+		stack<Node> S;
+		int i, j,index;
+		for ( i = 0; i < 9 && S.empty(); i++)
+		{
+			for (j = 0; j < 9 && S.empty(); j++)
+			{
+				if ((table[i][j] | chooseIndex[i][j]) == 0) {
+					--end;
+					int num = guess(i, j, table, chooseIndex);
+					S.push(Node(i,j,num));
+					chooseIndex[i][j] = num;
+				}
+			}
+		}
+		while (true)
+		{
+			if ( S.empty() ) {
+				cout << "error" << endl;
+				return;
+			}
+			else {
+				int x = 0, y;
+				while (x < 9 && !S.empty())
+				{
+					y = 0;
+					while (y < 9 && !S.empty())
+					{
+						if ((table[x][y] | chooseIndex[x][y]) == 0) {
+							int num = guess(x, y, table, chooseIndex);
+							if (num != 10) {
+								--end;
+								S.push(Node(x, y, num));
+								chooseIndex[x][y] = num;
+							}
+							else {
+								int num = guess(S.top().x, S.top().y, table, chooseIndex, S.top().chooseInt);
+								if (num == 10)
+								{
+									preGuess(S, table, chooseIndex);
+									x = 0;
+									y = 0;
+									continue;
+								}
+								else
+								{
+									S.top().chooseInt = num;
+									chooseIndex[S.top().x][S.top().y] = num;
+								}
+							}
+						}
+						++y;
+					}
+					++x;
+				}
+				if (end == 0) {
+					break;
+				}
+				else {
+					preGuess(S, table, chooseIndex);
+				}
+			}
+		}
+		cout << end << endl;
+		int x = 0, y = 0;
+		while (x < 9 && !S.empty())
+		{
+			y = 0;
+			while (y < 9 && !S.empty())
+			{
+				cout << (table[x][y] | chooseIndex[x][y]);
+				++y;
+			}
+			cout << endl;
+			++x;
+		}
+	}
+}
+
+namespace P3_7_2 {
+	bool end = false;
+	int table[9][9] = { 0 };
+
+	int guess(int i, int j, int min = 0) {
+		bool numMask[10] = { 0 };
+		int x = 0;
+		for (x = 0; x < 9; x++)
+		{
+			numMask[table[x][j]] = true;
+		}
+		int y = 0;
+		for (y = 0; y < 9; y++)
+		{
+			numMask[table[i][y]] = true;
+		}
+
+		int R = i / 3, C = j / 3;
+		R *= 3;
+		C *= 3;
+		for (x = 0; x < 3; x++)
+		{
+			for (y = 0; y < 3; y++)
+			{
+				numMask[table[R + x][C + y]] = true;
+			}
+		}
+
+		++min;
+		while (min < 10 && numMask[min]) ++min;
+		return min;
+	}
+
+	void deepGuess() {
+		int i = 0;
+		while (i < 81)
+		{
+			if (table[i / 9][i % 9] == 0) break;
+			++i;
+		}
+		int x = i / 9, y = i % 9;
+		while (!end)
+		{
+			int num = guess(x, y, table[x][y]);
+			if (num == 10) {
+				table[x][y] = 0;
+				break;
+			}
+			else {
+				table[x][y] = num;
+				if (x == 8 && y == 8) {
+					end = true;
+					break;
+				}
+				else {
+					deepGuess();
+				}
+			}
+		}
+	}
+
+
+	void solve() {
+		int R, C;
+		for (R = 0; R < 9; R++)
+		{
+			for (C = 0; C < 9; C++)
+			{
+				char temp;
+				cin >> temp;
+				table[R][C] = temp - '0';
+			}
+		}
+		deepGuess();
+		int x = 0, y = 0;
+		while (x < 9 )
+		{
+			y = 0;
+			while (y < 9)
+			{
+				cout << (table[x][y]);
+				++y;
+			}
+			cout << endl;
+			++x;
+		}
+	}
+}
+#endif
