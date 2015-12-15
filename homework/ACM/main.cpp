@@ -8,11 +8,12 @@
 #include <iomanip>
 #include <iostream>
 #include <algorithm>
-
+#include <limits>
 using namespace std;
 
 #define BLOCK_1
 #define BLOCK_2
+#define BLOCK_3
 
 #include "solve.h"
 
@@ -69,6 +70,8 @@ int main() {
 	P_MARK(2, 3);
 	P2_3::solve();
 #endif
+
+#ifndef BLOCK_3
 	P_MARK(3, 1);
 	P3_1::solve();
 
@@ -91,5 +94,19 @@ int main() {
 
 	P_MARK(3, 7);
 	P3_7::solve();
+#endif
+
+	P_MARK(4, 1);
+	P4_1::solve();
+
+	P_MARK(4, 2);
+	P4_2::solve();
+
+	P_MARK(4, 3);
+	P4_3::solve();
+
+	P_MARK(4, 4);
+	P4_4::solve();
+	
 	return 0;
 }

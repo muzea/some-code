@@ -1,30 +1,30 @@
 #ifndef BLOCK_1
 
-namespace P1_1{
+namespace P1_1 {
 	int recursive(int n);
 	int tail_recursive(int n);
 	int _tail_recursive(int n, int ret);
 	int formula_of_general_term(int n);
 
-	int recursive(int n){
+	int recursive(int n) {
 		if (n == 1)
 			return 2;
 		return 2 * (n - 1) + recursive(n - 1);
 	}
-	int tail_recursive(int n){
+	int tail_recursive(int n) {
 		return _tail_recursive(n, 0);
 	}
-	int _tail_recursive(int n, int ret){
+	int _tail_recursive(int n, int ret) {
 		if (n == 1)
 			return ret + 2;
 		return _tail_recursive(n - 1, ret + 2 * (n - 1));
 	}
-	int formula_of_general_term(int n){
+	int formula_of_general_term(int n) {
 		return n*(n - 1) + 2;
 	}
 }
 
-namespace P1_2{
+namespace P1_2 {
 	unsigned int table[1001] = { 0,3,6,6 };
 	unsigned int index = 3;
 	int solve(int n) {
@@ -35,7 +35,7 @@ namespace P1_2{
 		return table[n];
 	}
 }
-namespace P1_3{
+namespace P1_3 {
 	template<int N>
 	int find(int(&A)[N], int x);
 	template<typename T>
@@ -43,23 +43,23 @@ namespace P1_3{
 	int _find(int* A, int x, int len);
 
 	template<int N>
-	int find(int (&A)[N], int x){
+	int find(int(&A)[N], int x) {
 		return _find(A, x, N);;
 	}
 
 	template<>
-	int find<int*>(int* A, int x){
+	int find<int*>(int* A, int x) {
 		return _find(A, x, _msize(A) / sizeof(int));
 	}
-	int _find(int* A, int x, int len){
+	int _find(int* A, int x, int len) {
 		int i = 0;
 		while (i != len && *(A + i) < x) ++i;
 		return i != len&& *(A + i) == x ? i : -1;
 	}
 
 }
-namespace P1_4{
-	void find(int a[], int n, int &i, int &j, int x){
+namespace P1_4 {
+	void find(int a[], int n, int &i, int &j, int x) {
 		int L = i, R = j;
 		while (L <= R) {
 			int mid = (L + R) / 2;
@@ -74,14 +74,14 @@ namespace P1_4{
 				L = mid + 1;
 			}
 		}
-		std::swap(i,j);
+		std::swap(i, j);
 	}
 }
-namespace P1_5{
+namespace P1_5 {
 	void solve() {
 		int GongJi, MuJi;
 		cout << setw(10) << "公鸡" << setw(10) << "母鸡" << setw(10) << "小鸡" << endl;
-		for ( GongJi = 0; GongJi <= 33; GongJi++)
+		for (GongJi = 0; GongJi <= 33; GongJi++)
 		{
 			for (MuJi = 0; MuJi <= (100 - 3 * GongJi) / 2; MuJi++)
 			{
@@ -115,16 +115,16 @@ namespace P1_6 {
 	template<int N>
 	struct isNarcissistic {
 		enum {
-			result = N == ( (FUCK<(N % 10)>::v) + (FUCK<(N / 10 % 10)>::v) + (FUCK<(N / 100)>::v))
+			result = N == ((FUCK<(N % 10)>::v) + (FUCK<(N / 10 % 10)>::v) + (FUCK<(N / 100)>::v))
 		};
 	};
 
-	template<int N,bool IsNarcissistic>
+	template<int N, bool IsNarcissistic>
 	struct printIfNarcissistic {
-		static inline void print(){}
+		static inline void print() {}
 	};
 	template<int N>
-	struct printIfNarcissistic<N,true> {
+	struct printIfNarcissistic<N, true> {
 		static inline void print() {
 			cout << N << endl;
 		}
@@ -145,14 +145,14 @@ namespace P1_6 {
 		}
 	};
 }
-namespace P1_7{
+namespace P1_7 {
 	struct Point;
 	struct Cube;
 	double D_MAX = double(INT_MAX) + double(INT_MAX);
 	vector<Point> vec;
 	vector<Cube> store;
-	vector<int> index(7,0);
-	
+	vector<int> index(7, 0);
+
 	struct Point {
 		int x, y, z;
 		Point(int _x = 0, int _y = 0, int _z = 0) : x(_x), y(_y), z(_z) {}
@@ -191,7 +191,7 @@ namespace P1_7{
 			ret = min(ret, double(abs(vec[i].z - P2.z)));
 			return ret;
 		}
-		
+
 	}
 	const double C_PI = 1.3333333 * 3.141592653;
 	void solve() {
@@ -201,13 +201,13 @@ namespace P1_7{
 		int n;
 		cin >> n;
 		index.resize(n);
-		generate_n(index.begin(), n, []() ->int{
+		generate_n(index.begin(), n, []() ->int {
 			static int i = 0;
 			return (i++);
 		});
 		int x, y, z, i = 0;
 		cin >> x >> y >> z;
-		P1 = Point(x,y,z);
+		P1 = Point(x, y, z);
 		cin >> x >> y >> z;
 		P2 = Point(x, y, z);
 		while (i != n) {
@@ -230,7 +230,7 @@ namespace P1_7{
 		cout << T_V << endl;
 	}
 }
-namespace P1_8{
+namespace P1_8 {
 	inline int check(bool(&row)[9]);
 	inline void C_cnt(bool(&row)[9], int(&cnt)[9]);
 	bool table[10000][9] = { 0 };
@@ -251,7 +251,7 @@ namespace P1_8{
 		i = 0;
 		while (i != 9)
 		{
-			if ( cnt[i] > (N / 2) )
+			if (cnt[i] > (N / 2))
 			{
 				sum += cnt[i];
 			}
@@ -270,8 +270,8 @@ namespace P1_8{
 			MAX = sum;
 			i = 0;
 			sum = 0;
-			memset(cnt , 0,sizeof cnt);
-			while (i!= N)
+			memset(cnt, 0, sizeof cnt);
+			while (i != N)
 			{
 				sum += check(table[i]);
 				C_cnt(table[i], cnt);
@@ -284,7 +284,7 @@ namespace P1_8{
 				i = 0;
 				while (i != 9)
 				{
-					if (cnt[i] > (N / 2))
+					if (cnt[i] >(N / 2))
 					{
 						sum += cnt[i];
 					}
@@ -321,7 +321,7 @@ namespace P1_8{
 		}
 		return cnt;
 	}
-	inline void C_cnt(bool(&row)[9] ,int (&cnt)[9]) {
+	inline void C_cnt(bool(&row)[9], int(&cnt)[9]) {
 		int i = 0;
 		while (i != 9) {
 			cnt[i] += row[i];
@@ -329,13 +329,13 @@ namespace P1_8{
 		}
 	}
 }
-namespace P1_9{
+namespace P1_9 {
 	const int  MAX_N = 1000;
-	pair<int, int> pre[MAX_N] = { {0,1} }, MAX(0, 1);
+	pair<int, int> pre[MAX_N] = { { 0,1 } }, MAX(0, 1);
 	int	B[MAX_N] = { 0 },
 		E[MAX_N] = { 0 };
 	void solve() {
-		
+
 		int N, i = 0, j;
 		cin >> N;
 		while (i != N)
@@ -382,7 +382,7 @@ namespace P1_9{
 	}
 
 }
-namespace P1_10{
+namespace P1_10 {
 	void solve() {
 		int K = 0, M, N;
 		while (cin >> K  && K)
@@ -435,7 +435,7 @@ namespace P2_1 {
 				);
 		}
 		int div = len / 2;
-		pair<int, int> a =find(vec, begin, div)
+		pair<int, int> a = find(vec, begin, div)
 			, b = find(vec, begin + div, len - div);
 		return make_pair(max(a.first, b.first), min(a.second, b.second));
 	}
@@ -443,7 +443,7 @@ namespace P2_1 {
 		vector<int> vec;
 		int n, i = 0;
 		cin >> n;
-		while (i!=n){
+		while (i != n) {
 			int value;
 			cin >> value;
 			vec.push_back(value);
@@ -459,7 +459,7 @@ namespace P2_1 {
 
 namespace P2_2 {
 	struct object {
-		double i,V, W;
+		double i, V, W;
 	};
 	bool cmp(object& obj1, object& obj2) {
 		return ((double(obj1.V) / double(obj1.W)) > (double(obj2.V) / double(obj2.W)));
@@ -480,7 +480,7 @@ namespace P2_2 {
 		}
 		i = 0;
 		sort(obj, obj + n, cmp);
-		vector<pair<int,int>> vec;
+		vector<pair<int, int>> vec;
 		while (w && i < n)
 		{
 			if (obj[i].W <= w) {
@@ -505,14 +505,14 @@ namespace P2_2 {
 namespace P2_3 {
 	void solve() {
 		char res[242] = { 0 };
-		cin >> (res+1);
+		cin >> (res + 1);
 		int s;
 		cin >> s;
 		char *slow = res + 1, *fast = res + 2;
 		while (s && *fast)
 		{
 
-			while (s && *fast && *slow && *fast < *slow ) {
+			while (s && *fast && *slow && *fast < *slow) {
 				--s;
 				--slow;
 			}
@@ -609,14 +609,14 @@ namespace P3_3 {
 		*first = pivot;
 		return first;
 	}
-	void qsort(int *first,int *last) {
+	void qsort(int *first, int *last) {
 		if ((last - first) > 1) {
 			int *mid = partition(first, last);
 			qsort(first, mid);
 			qsort(mid, last);
 		}
 	}
-	bool binary_search(int *first,int *last, int val) {
+	bool binary_search(int *first, int *last, int val) {
 		int *left = first, *right = last, *mid = first + (last - first) / 2;
 		while (right >= left)
 		{
@@ -655,8 +655,8 @@ namespace P3_4 {
 		int n;
 		while (num--&&cin >> n)
 		{
-			int state = 0, length = -1,i,a;
-			for ( i = 0; i<n; i++)
+			int state = 0, length = -1, i, a;
+			for (i = 0; i<n; i++)
 			{
 				cin >> data[i];
 				if (length == -1 || strlen(data[i])<length)
@@ -668,9 +668,9 @@ namespace P3_4 {
 			int temp = length, flag = 0, j;
 			while (temp)
 			{
-				for ( i = 0; i + temp <= length; i++)
+				for (i = 0; i + temp <= length; i++)
 				{
-					for ( j = i, a = 0; a<temp; j++, a++)
+					for (j = i, a = 0; a<temp; j++, a++)
 						Temp_Data[a] = data[state][j];
 					Temp_Data[a] = '\0';
 					if (Check_Data(n, state))
@@ -702,7 +702,7 @@ namespace P3_4 {
 }
 
 namespace P3_5 {
-	int solve(int k,int m) {
+	int solve(int k, int m) {
 		int END = m;
 		static int Data[51][51] = { { 0, 1 },{ 0, 1 } };
 		static int  i = 2;
@@ -730,11 +730,11 @@ namespace P3_5 {
 		return Data[END][k];
 	}
 }namespace P3_6 {
-	inline int find_first_zero_bit(int& mask,int num) {
+	inline int find_first_zero_bit(int& mask, int num) {
 		int pos = 11;
 		while ((pos - num) > 0)
 		{
-			if (  ( (mask & (1 << pos)) || (mask & (1 << (pos - num - 1))) ) == 0 ) {
+			if (((mask & (1 << pos)) || (mask & (1 << (pos - num - 1)))) == 0) {
 				return pos;
 			}
 			--pos;
@@ -748,7 +748,7 @@ namespace P3_5 {
 		pos[4] = 12;
 		pos[7] = 13;
 		int i;
-		do {  
+		do {
 			mask = 0;
 			mask |= (((1 << (7 + 1)) + 1) << (pos[7] - 7 - 1));
 			mask |= (((1 << (4 + 1)) + 1) << (pos[4] - 4 - 1));
@@ -783,19 +783,19 @@ namespace P3_7 {
 	int end = 81;
 	struct Node
 	{
-		int x,y,chooseInt;
-		Node(int _x, int _y, int _chooseInt):x(_x),y(_y),chooseInt(_chooseInt){}
+		int x, y, chooseInt;
+		Node(int _x, int _y, int _chooseInt) :x(_x), y(_y), chooseInt(_chooseInt) {}
 	};
 
-	int guess(int i,int j, int (&table)[9][9], int(&chooseIndex)[9][9], int min = 0) {
+	int guess(int i, int j, int(&table)[9][9], int(&chooseIndex)[9][9], int min = 0) {
 		bool numMask[10] = { 0 };
 		int x = 0;
-		for ( x = 0; x < 9; x++)
+		for (x = 0; x < 9; x++)
 		{
 			numMask[table[x][j] | chooseIndex[x][j]] = true;
 		}
 		int y = 0;
-		for ( y = 0; y < 9; y++)
+		for (y = 0; y < 9; y++)
 		{
 			numMask[table[i][y] | chooseIndex[i][y]] = true;
 		}
@@ -850,22 +850,22 @@ namespace P3_7 {
 			}
 		}
 		stack<Node> S;
-		int i, j,index;
-		for ( i = 0; i < 9 && S.empty(); i++)
+		int i, j, index;
+		for (i = 0; i < 9 && S.empty(); i++)
 		{
 			for (j = 0; j < 9 && S.empty(); j++)
 			{
 				if ((table[i][j] | chooseIndex[i][j]) == 0) {
 					--end;
 					int num = guess(i, j, table, chooseIndex);
-					S.push(Node(i,j,num));
+					S.push(Node(i, j, num));
 					chooseIndex[i][j] = num;
 				}
 			}
 		}
 		while (true)
 		{
-			if ( S.empty() ) {
+			if (S.empty()) {
 				cout << "error" << endl;
 				return;
 			}
@@ -1002,7 +1002,7 @@ namespace P3_7_2 {
 		}
 		deepGuess();
 		int x = 0, y = 0;
-		while (x < 9 )
+		while (x < 9)
 		{
 			y = 0;
 			while (y < 9)
@@ -1015,4 +1015,208 @@ namespace P3_7_2 {
 		}
 	}
 }
+#endif
+
+#ifndef BLOCK_4
+namespace P4_1 {
+	void solve() {
+		int *N = nullptr, *C = nullptr, *F = nullptr;
+		int num, i = 2;
+		cin >> num;
+		N = new int[num + 1];
+		C = new int[num + 1];
+		F = new int[num + 1];
+		fill(N, N + num + 1, 0);
+		fill(C, C + num + 1, 0);
+		fill(F, F + num + 1, 0);
+		while (i <= num)
+		{
+			cin >> F[i];
+			++i;
+		}
+		--i;
+		while (i != 1) {
+			int father = F[i], mul = (C[i] + N[i] + 1);
+			N[father] = N[father] + N[father] * mul + mul;
+			C[father] = C[father] + C[father] * N[i] + N[i];
+			--i;
+		}
+		cout << (C[i] + N[i] + 1) << endl;
+		delete[] N; delete[] C; delete[] F;
+	}
+}
+
+namespace P4_2 {
+	void solve() {
+		int dp[10][10][10] = { 0 };
+		int A[11] = { 2 ,  4 ,  7 , 11,  13 , 15 , 18 , 22 , 18 , 15  ,11 },
+			B[11] = { 5 , 10 , 15 , 20 , 24 , 18 , 12 ,  9 ,  5 ,  3  , 1 },
+			C[11] = { 8 , 12 , 17 , 22 , 19 , 16 , 14 , 11 ,  9 ,  7  , 4 };
+		int x = 0, y = 0, z = 0, N, G_MAX = 0;
+		dp[0][0][0] = A[0] + B[0] + C[0];
+		cin >> N;
+		for (x = 0; x*x <= N; x++)
+		{
+			for (y = 0; x*x + y*y <= N; y++)
+			{
+				for (z = 0; x*x + y*y + z*z <= N; z++)
+				{
+					int MAX = 0;
+					if (x != 0) MAX = max(MAX, dp[x - 1][y][z] + A[x] - A[x - 1]);
+					if (y != 0) MAX = max(MAX, dp[x][y - 1][z] + A[y] - A[y - 1]);
+					if (z != 0) MAX = max(MAX, dp[x][y][z - 1] + A[z] - A[z - 1]);
+					dp[x][y][z] = max(MAX, dp[x][y][z]);
+					G_MAX = max(G_MAX, dp[x][y][z]);
+				}
+			}
+		}
+		cout << G_MAX << endl;
+	}
+}
+
+namespace P4_3 {
+	//int c_hanbao, c_shutiao, c_yinliao;
+	int cost[3], NUM;
+	int T[10000];
+	bool check(int hanbao, int shutiao, int yinliao) {
+		int i = 0, j = 0, cal = 0;
+		int _T[10000], N[3];
+		N[0] = hanbao;
+		N[1] = shutiao;
+		N[2] = yinliao;
+		while (i < NUM)
+		{
+			_T[i] = T[i];
+			++i;
+		}
+		i = 0;
+		while (i < NUM)
+		{
+			j = 0;
+			while (j < 3)
+			{
+				if (_T[i] >(N[j] * cost[j])) {
+					_T[i] -= (N[j] * cost[j]);
+					N[j] = 0;
+				}
+				else {
+					int num = _T[i] / cost[j];
+					_T[i] -= (cost[j] * num);
+					N[j] -= num;
+				}
+				++j;
+			}
+			++i;
+		}
+
+		return ((N[0] | N[1] | N[2]) == 0);
+	}
+	void solve() {
+		int a, b, c, ans, left = 0, right = 100;
+		cin >> a >> b >> c
+			>> cost[0] >> cost[1] >> cost[2]
+			>> NUM;
+		int i = 0;
+		while (i < NUM)
+		{
+			cin >> T[i];
+			++i;
+		}
+		while (right >= left)
+		{
+			ans = (right + left) / 2;
+			if (check(ans * a, ans*b, ans*c)) {
+				left = ans + 1;
+			}
+			else {
+				right = ans - 1;
+			}
+		}
+		cout << right << endl;
+	}
+}
+namespace P4_4 {
+	struct Point {
+		int x, y;
+		Point(int _x = 0, int _y = 0) :x(_x), y(_y) {}
+		Point operator-(Point p) {
+			return Point(this->x - p.x, this->y - p.y);
+		}
+	};
+	int det(Point p1, Point p2) {
+		return (p1.x * p2.y - p2.x * p1.y);
+	}
+	void solve() {
+		Point p[4], v[6];
+		int i = 0;
+		while (i < 4)
+		{
+			cin >> p[i].x >> p[i].y;
+			++i;
+		}
+		if (p[1].x < p[0].x) { swap(p[1].x, p[0].x); swap(p[1].y, p[0].y); }
+		if (p[3].x < p[2].x) { swap(p[2].x, p[3].x); swap(p[2].y, p[3].y); }
+		v[0] = p[1] - p[0];
+		v[1] = p[1] - p[2];
+		v[2] = p[1] - p[3];
+
+		v[3] = p[2] - p[3];
+		v[4] = p[2] - p[0];
+		v[5] = p[2] - p[1];
+
+		int j[4];
+		
+		string word[2] = { "不相交","相交" };
+		//when you get error in there,you can
+		//1  use UTF-16 with BOM or UTF-8 with BOM
+		//2  delete all chinese word in this file
+		j[0] = det(v[0], v[1]);
+		j[1] = det(v[0], v[2]);
+
+		if (j[0] < j[1]) swap(j[0], j[1]);
+		if (j[0] > 0 && j[1] < 0) {
+			;
+		}
+		else {
+			if (j[0] == 0 && j[1] == 0) {
+				if (p[1].x >= p[2].x && p[1].x <= p[3].x)
+				{
+					;
+				}
+				else {
+					cout << word[0] << endl;
+					return;
+				}
+			}
+			else {
+				cout << word[0] << endl;
+				return;
+			}
+		}
+		j[2] = det(v[3], v[4]);
+		j[3] = det(v[3], v[5]);
+		if (j[2] < j[3]) swap(j[2], j[3]);
+		if (j[2] > 0 && j[3] < 0) {
+			;
+		}
+		else {
+			if (j[2] == 0 && j[3] == 0) {
+				if (p[2].x >= p[0].x && p[2].x <= p[1].x)
+				{
+					;
+				}
+				else {
+					cout << word[0] << endl;
+					return;
+				}
+			}
+			else {
+				cout << word[0] << endl;
+				return;
+			}
+		}
+		cout << word[1] << endl;
+	}
+}
+
 #endif
